@@ -1,54 +1,53 @@
-# Code of MIPS at SemEval-2024 Task 3  
+# MECHM: Multimodal Emotion Analysis in Conversations for Mental Health Monitoring
 
-## Introduction  
+# About the Project
 
-This paper presents a winning submission to Subtask 2 of SemEval 2024 Task 3, concentrating on multimodal emotion cause analysis in conversations. We propose a two-step architecture for multimodal emotion recognition and multimodal emotion cause extraction, our study delves into the efficacy of integrating supplementary modalities alongside textual data to bolster comprehension of emotions and discern their underlying triggers. Through experimental evaluation, our team elucidates the advantages conferred by the inclusion of diverse modalities, thereby amplifying the models' capacity for emotion understanding and causality inference. Ultimately, our submission for Subtask 2 of SemEval-2024 Task 3 attains a weighted F1 score of 0.3435, ranking third.
+This paper introduces a framework called MECHM, aiming to improve mental health monitoring by analyzing emotions in conversations. By combining visual, audio, and text data using cross-modal attention mechanisms, MECHM enhances emotion recognition. Experimental results demonstrate its effectiveness in detecting emotional distress compared to existing methods, offering the potential for timely interventions and advancements in mental health monitoring.
 
-## Pipeline
-![pipeline](./images/pipeline_prompt.jpg)
+# Installation
 
-## Setup
-### Prepare the code and the environment
+1. Download the project from GitHub.
+2. Create a Conda environment named MECHM with Python 3.9:
 
-```
-git clone https://github.com/MIPS-COLT/MER-MCE.git
-cd MER-MCE
-conda env create -f environment.yaml
-conda activate MECHM
-```  
+    ```bash
+    conda create --name MECHM python=3.9
+    conda activate MECHM
+    ```
 
-### Prepare the pretrained LLM weights
-Download the Llama-2-7b-chat-hf model from Huggingface to "MER-MCE/checkpoints/"  
-```
-https://huggingface.co/meta-llama/Llama-2-7b-chat-hf
-```
+3. Install the required packages:
 
-### Prepare the pretrained model checkpoints
-Download the pre-trained emotion cause analysis model on the MECHM dataset and place it in the folder named "MER-MCE/checkpoints/save_checkpoint".
-```
-https://pan.baidu.com/s/1-RlfBu5qeyKy-7ZnTh3FOA
-Extraction Code: 07gd
-```
+    ```
+    conda install -c pytorch torch=2.0.0 torchaudio torchvision
+    conda install -c huggingface transformers=4.30.0 huggingface-hub=0.18.0
+    conda install matplotlib=3.7.0 psutil=5.9.4 pyyaml=6.0 regex=2022.10.31 tokenizers=0.13.2 tqdm=4.64.1 timm=0.6.13
+    conda install -c conda-forge iopath opencv-python=4.7.0.72 decord=0.6.0 scikit-image
+    conda install -c anaconda peft=0.2.0
+    conda install -c conda-forge sentence-transformers visual-genome wandb
+    pip install gradio==3.47.1 accelerate==0.20.3 bitsandbytes==0.37.0
+    ```
 
-## Run
-Run the following code to extract emotional cause:  
+# Datasets
 
-```
-torchrun  --nproc_per_node 1 eval_MECHM_cause.py --cfg-path evaluated/minigptv2_eval_MECHM_emotion.yaml
+This study utilized three datasets for developing and evaluating the MECHM framework, covering various aspects of human emotion in conversations.
 
-python emotion-cause.py
-```
-Save the final submission result of Subtask 2 as "outcomes/submit_all_cause_ck6_wd5_now-n_w-e.json" (w-avg.F1=0.3435)
+- **SEMAINE dataset:** Captures interactions between humans and avatars, providing video and audio recordings with annotations of emotional states.
+- **AESI dataset:** Contains sentences designed to evoke specific emotions, recorded by native speakers.
+- **ECF dataset:** Features conversations from the TV show Friends, with annotations linking emotions to conversation context.
+
+# Prepare the Pre-trained LLM Weights
+
+Download the Llama-2-7b-chat-hf model from Huggingface to "MECHM/checkpoints/":
+[Download Llama-2-7b-chat-hf](https://huggingface.co/meta-llama/Llama-2-7b-chat-hf)
+
+# Run the Project
+
+1. Run the following code to extract emotional cause:
+
+    ```
+    torchrun --nproc_per_node 1 eval_MECHM_cause.py --cfg-path evaluated/minigptv2_eval_MECHM_emotion.yaml
+    python emotion-cause.py
+    ```
+
+2. Save the final submission result of Subtask 2 as "outcomes/submit_all_cause_ck6_wd5_now-n_w-e.json" (w-avg.F1=0.3435).
 
 
-
-If you're using MER-MCE in your research or applications, please cite using this BibTeX:
-```bibtex
-@misc{cheng2024mips,
-      title={MIPS at SemEval-2024 Task 3: Multimodal Emotion-Cause Pair Extraction in Conversations with Multimodal Language Models}, 
-      author={Zebang Cheng and Fuqiang Niu and Yuxiang Lin and Zhi-Qi Cheng and Bowen Zhang and Xiaojiang Peng},
-      year={2024},
-      eprint={2404.00511},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL}
-}
