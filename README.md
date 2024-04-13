@@ -48,6 +48,6 @@ Download the Llama-2-7b-chat-hf model from Huggingface to "MECHM/checkpoints/":
     python emotion-cause.py
     ```
 
-2. Save the final submission result of Subtask 2 as "outcomes/submit_all_cause_ck6_wd5_now-n_w-e.json" (w-avg.F1=0.3435).
+2. Save the final submission result as "outcomes/submit_all_cause_ck6_wd5_now-n_w-e.json" (w-avg.F1=0.3435).
 
 
